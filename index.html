@@ -1,162 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SweVasc – Swedish Network for ANCA-Associated Vasculitis</title>
+  <meta name="description" content="SweVasc is a national network of researchers, physicians and nurses in Sweden working together on ANCA-associated vasculitis.">
 
-export default function SWEVASCHomepage() {
-  const centers = [
-    'Uppsala',
-    'Stockholm',
-    'Gothenburg',
-    'Lund/Malmö',
-    'Linköping',
-    'Umeå',
-    'Örebro'
-  ];
+  <style>
+    /* ---------- Design tokens ---------- */
+    :root {
+      --blue-900: #0f2a43;
+      --blue-700: #1b4d7a;
+      --blue-500: #2f7fc1;
+      --yellow-500: #f2b632;
+      --bg: #ffffff;
+      --bg-soft: #f3f7fb;
+      --text: #1d2a36;
+      --text-muted: #5a6a78;
+      --border: #dbe4ec;
+      --radius: 12px;
+      --max-width: 1060px;
+    }
 
+    /* ---------- Base ---------- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+      font-size: 17px;
+    }
+    h1, h2, h3 { line-height: 1.25; color: var(--blue-900); margin: 0 0 .6em; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+    h3 { font-size: 1.15rem; }
+    p { margin: 0 0 1em; }
+    a { color: var(--blue-500); }
+    a:hover { color: var(--blue-700); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+    section { padding: 72px 0; }
+    section.alt { background: var(--bg-soft); }
+    .section-intro { color: var(--text-muted); max-width: 680px; margin-bottom: 2rem; }
 
-  return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <nav className="sticky top-0 z-50 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="font-bold text-xl text-blue-900">SWEVASC</h1>
-            <p className="text-xs text-slate-500">
-              Swedish Network for ANCA-Associated Vasculitis
-            </p>
-          </div>
-          <div className="hidden md:flex gap-6 text-sm font-medium">
-            <a href="#about">About</a>
-            <a href="#research">Research</a>
-            <a href="#members">Members</a>
-            <a href="#events">Events</a>
-            <a href="#patients">Patients</a>
-            <a href="#contact">Contact</a>
-          </div>
-        </div>
+    /* ---------- Header / nav ---------- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 64px; gap: 16px; flex-wrap: wrap;
+    }
+    .logo {
+      font-weight: 800; font-size: 1.35rem; letter-spacing: .5px;
+      color: var(--blue-900); text-decoration: none;
+    }
+    .logo span { color: var(--blue-500); }
+    nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: var(--text); font-size: .95rem; font-weight: 500; }
+    nav a:hover { color: var(--blue-500); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+      color: #fff;
+      padding: 96px 0 88px;
+    }
+    .hero h1 { color: #fff; }
+    .hero .tagline { font-size: 1.2rem; max-width: 640px; color: #d6e6f5; margin-bottom: 2rem; }
+    .hero .eyebrow {
+      display: inline-block; text-transform: uppercase; letter-spacing: 2px;
+      font-size: .8rem; font-weight: 700; color: var(--yellow-500); margin-bottom: 1rem;
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-block; padding: 12px 26px; border-radius: 999px;
+      font-weight: 600; text-decoration: none; transition: transform .15s, background .15s;
+      border: 2px solid transparent;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--yellow-500); color: var(--blue-900); }
+    .btn-primary:hover { background: #ffc857; color: var(--blue-900); }
+    .btn-outline { border-color: #fff; color: #fff; margin-left: 10px; }
+    .btn-outline:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+    /* ---------- Cards / grids ---------- */
+    .grid { display: grid; gap: 24px; }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      box-shadow: 0 2px 8px rgba(15,42,67,.04);
+    }
+    .card .icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--bg-soft); color: var(--blue-500);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 14px;
+    }
+
+    /* ---------- About ---------- */
+    .two-col { display: grid; gap: 40px; grid-template-columns: 1.3fr 1fr; align-items: start; }
+    .callout {
+      background: var(--bg-soft); border-left: 4px solid var(--blue-500);
+      padding: 22px 24px; border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .callout h3 { margin-bottom: .4em; }
+    .callout ul { margin: 0; padding-left: 1.1em; }
+
+    /* ---------- Members ---------- */
+    .member {
+      text-align: center;
+    }
+    .avatar {
+      width: 84px; height: 84px; border-radius: 50%;
+      background: var(--bg-soft); border: 2px solid var(--border);
+      margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: var(--blue-700); font-size: 1.3rem;
+    }
+    .member .role { color: var(--text-muted); font-size: .92rem; margin: 0; }
+
+    /* ---------- News ---------- */
+    .news-item { padding: 18px 0; border-bottom: 1px solid var(--border); }
+    .news-item:last-child { border-bottom: none; }
+    .news-date { font-size: .85rem; color: var(--text-muted); font-weight: 600; }
+
+    /* ---------- Contact ---------- */
+    .contact-box {
+      background: var(--blue-900); color: #fff;
+      border-radius: var(--radius); padding: 40px; text-align: center;
+    }
+    .contact-box h2 { color: #fff; }
+    .contact-box a { color: var(--yellow-500); }
+
+    /* ---------- Footer ---------- */
+    footer { background: #0a1c2e; color: #a9bccd; padding: 32px 0; font-size: .9rem; }
+    footer .container { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a { color: #a9bccd; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 760px) {
+      section { padding: 52px 0; }
+      .two-col { grid-template-columns: 1fr; }
+      .btn-outline { margin: 12px 0 0 0; }
+      nav ul { gap: 14px; }
+      .hero { padding: 64px 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="container nav">
+      <a href="#top" class="logo">Swe<span>Vasc</span></a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#aims">Aims</a></li>
+          <li><a href="#members">Network</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
       </nav>
-
-
-      <header className="bg-gradient-to-br from-blue-950 via-blue-900 to-sky-700 text-white">
-        <div className="max-w-7xl mx-auto px-6 py-24">
-          <div className="max-w-4xl">
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm">
-              National Research and Clinical Network
-            </span>
-            <h2 className="text-6xl font-bold mt-6 mb-6">
-              SWEVASC
-            </h2>
-            <p className="text-2xl font-light mb-6">
-              Connecting clinicians, researchers and patient partners across
-              Sweden to advance research and improve outcomes in
-              ANCA-associated vasculitis.
-            </p>
-            <div className="flex gap-4">
-              <button className="bg-white text-blue-900 px-6 py-3 rounded-2xl font-semibold">
-                Network Membership
-              </button>
-              <button className="border border-white px-6 py-3 rounded-2xl">
-                Ongoing Projects
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <section id="about" className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">About SWEVASC</h2>
-            <p className="text-lg leading-relaxed text-slate-700">
-              SWEVASC is a newly established national network dedicated to
-              ANCA-associated vasculitis. The network aims to strengthen
-              collaboration between Swedish academic centres, healthcare
-              professionals, researchers and patient representatives.
-            </p>
-          </div>
-
-
-          <div className="bg-slate-50 rounded-3xl p-8">
-            <h3 className="text-xl font-semibold mb-4">Objectives</h3>
-            <ul className="space-y-3 text-slate-700">
-              <li>• Facilitate national research collaborations</li>
-              <li>• Promote high-quality patient care</li>
-              <li>• Support education and training</li>
-              <li>• Develop multicentre studies and registries</li>
-              <li>• Engage patient research partners</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="research" className="bg-slate-50 py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-10 text-center">Research Priorities</h2>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-3xl shadow-sm">
-              <h3 className="font-semibold mb-3">Clinical Studies</h3>
-              <p>National observational and interventional projects.</p>
-            </div>
-            <div className="bg-white p-6 rounded-3xl shadow-sm">
-              <h3 className="font-semibold mb-3">Biomarkers</h3>
-              <p>Identification of prognostic and disease activity markers.</p>
-            </div>
-            <div className="bg-white p-6 rounded-3xl shadow-sm">
-              <h3 className="font-semibold mb-3">Precision Medicine</h3>
-              <p>Improved risk stratification and personalized treatment.</p>
-            </div>
-            <div className="bg-white p-6 rounded-3xl shadow-sm">
-              <h3 className="font-semibold mb-3">Patient Outcomes</h3>
-              <p>Long-term health, quality of life and complications.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="members" className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold mb-10 text-center">Participating Centres</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {centers.map((center) => (
-            <div key={center} className="border rounded-2xl p-5 text-center bg-white shadow-sm">
-              {center}
-            </div>
-          ))}
-        </div>
-      </section>
-      <section id="events" className="bg-blue-50 py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-10">News & Events</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-3xl p-8 shadow-sm">
-              <h3 className="font-semibold text-xl mb-2">Annual SWEVASC Meeting</h3>
-              <p>Information about upcoming network meetings and workshops.</p>
-            </div>
-            <div className="bg-white rounded-3xl p-8 shadow-sm">
-              <h3 className="font-semibold text-xl mb-2">Current Initiatives</h3>
-              <p>Updates on active collaborative research projects.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="patients" className="max-w-7xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-4xl font-bold mb-6">Patient Information</h2>
-        <p className="max-w-3xl mx-auto text-lg text-slate-700">
-          SWEVASC aims to provide reliable information for patients and families,
-          while incorporating patient perspectives into research and guideline development.
-        </p>
-      </section>
-
-      <footer id="contact" className="bg-slate-900 text-slate-300 py-12">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-white font-bold text-xl">SWEVASC</h3>
-            <p className="mt-2">Swedish Network for ANCA-Associated Vasculitis</p>
-          </div>
-          <div>
-            <h3 className="text-white font-semibold">Contact</h3>
-            <p>Network Coordinator</p>
-            <p>Johanna Dahlqvist</p>
-            <p>contact@swevasc.se</p>
-          </div>
-        </div>
-      </footer>
     </div>
-  );
-}
+  </header>
+
+  <main id="top">
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="container">
+        <span class="eyebrow">Swedish national network</span>
+        <h1>SweVasc</h1>
+        <p class="tagline">
+          A national network of researchers, physicians and nurses working together
+          to improve care and research in ANCA-associated vasculitis across Sweden.
+        </p>
+        <a href="#about" class="btn btn-primary">Learn more</a>
+        <a href="#contact" class="btn btn-outline">Join the network</a>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about">
+      <div class="container two-col">
+        <div>
+          <h2>About SweVasc</h2>
+          <p>
+            SweVasc is a newly founded network that brings together professionals
+            from all over Sweden who work with ANCA-associated vasculitis (AAV).
+            Our members include researchers, doctors and nurses from different
+            specialties and regions.
+          </p>
+          <p>
+            ANCA-associated vasculitis is a group of rare autoimmune diseases that
+            cause inflammation of small blood vessels. It includes granulomatosis
+            with polyangiitis (GPA), microscopic polyangiitis (MPA) and eosinophilic
+            granulomatosis with polyangiitis (EGPA). Because these diseases are rare
+            and can affect many organs, collaboration across clinics and disciplines
+            is essential.
+          </p>
+          <p>
+            <!-- TODO: Add a sentence about when/where the network was founded and who initiated it. -->
+            [Add a short paragraph about the background and founding of the network.]
+          </p>
+        </div>
+        <aside class="callout">
+          <h3>At a glance</h3>
+          <ul>
+            <li>Nationwide, multidisciplinary network</li>
+            <li>Focus: ANCA-associated vasculitis</li>
+            <li>Researchers, physicians and nurses</li>
+            <li>Founded: [year]</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== Aims ===== -->
+    <section id="aims" class="alt">
+      <div class="container">
+        <h2>Our aims</h2>
+        <p class="section-intro">
+          [Edit these to reflect the goals agreed on by the network.]
+        </p>
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="icon" aria-hidden="true">🔬</div>
+            <h3>Research</h3>
+            <p>Facilitate collaboration on national research projects, registries and clinical studies in AAV.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">🩺</div>
+            <h3>Clinical care</h3>
+            <p>Share experience and promote equal, high-quality care for patients regardless of where in Sweden they live.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">🎓</div>
+            <h3>Education</h3>
+            <p>Organize meetings and educational activities for healthcare professionals and researchers.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Network / members ===== -->
+    <section id="members">
+      <div class="container">
+        <h2>The network</h2>
+        <p class="section-intro">
+          SweVasc is made up of colleagues from university hospitals and regional clinics across the country.
+        </p>
+        <div class="grid grid-3">
+          <div class="card member">
+            <div class="avatar" aria-hidden="true">AB</div>
+            <h3>[Name]</h3>
+            <p class="role">Organizer<br>[Title, institution]</p>
+          </div>
+          <div class="card member">
+            <div class="avatar" aria-hidden="true">CD</div>
+            <h3>[Name]</h3>
+            <p class="role">[Role in network]<br>[Title, institution]</p>
+          </div>
+          <div class="card member">
+            <div class="avatar" aria-hidden="true">EF</div>
+            <h3>[Name]</h3>
+            <p class="role">[Role in network]<br>[Title, institution]</p>
+          </div>
+        </div>
+        <p style="margin-top:1.5rem;color:var(--text-muted);">
+          <!-- TODO: Replace with a full member list or a map of participating centres. -->
+          A full list of participating centres will be added here.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== News ===== -->
+    <section id="news" class="alt">
+      <div class="container">
+        <h2>News &amp; events</h2>
+        <div class="card">
+          <div class="news-item">
+            <div class="news-date">[Date]</div>
+            <h3>SweVasc is launched</h3>
+            <p>[Short announcement about the founding of the network.]</p>
+          </div>
+          <div class="news-item">
+            <div class="news-date">[Date]</div>
+            <h3>First network meeting</h3>
+            <p>[Details about time, place and agenda.]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2>Get in touch</h2>
+          <p>
+            Interested in joining SweVasc or collaborating with us?<br>
+            Contact the network organizer.
+          </p>
+          <p>
+            <a href="mailto:[email protected]">[email protected]</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <span>© 2026 SweVasc – Swedish network for ANCA-associated vasculitis</span>
+      <span>The information on this site is intended for general information and does not replace medical advice.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
