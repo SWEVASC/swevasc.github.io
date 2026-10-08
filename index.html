@@ -1,120 +1,30 @@
 
-export default function ANCANetworkHomepage() {
+export default function SWEVASCHomepage() {
+  const centers = [
+    'Uppsala',
+    'Stockholm',
+    'Gothenburg',
+    'Lund/Malmö',
+    'Linköping',
+    'Umeå',
+    'Örebro'
+  ];
+
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="bg-gradient-to-r from-blue-900 to-sky-700 text-white">
-        <div className="max-w-6xl mx-auto px-6 py-16">
-          <h1 className="text-5xl font-bold mb-4">
-            Swedish ANCA Vasculitis Network
-          </h1>
-          <p className="text-xl max-w-3xl">
-            A national multidisciplinary network advancing research,
-            collaboration, education, and clinical care for patients with
-            ANCA-associated vasculitis in Sweden.
-          </p>
-          <div className="mt-8 flex gap-4">
-            <button className="bg-white text-blue-900 px-5 py-3 rounded-2xl font-semibold shadow">
-              Join the Network
-            </button>
-            <button className="border border-white px-5 py-3 rounded-2xl">
-              Learn More
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-6">About the Network</h2>
-        <p className="text-lg leading-relaxed">
-          The Swedish ANCA Vasculitis Network brings together clinicians,
-          researchers, healthcare professionals, and patient representatives
-          with the shared goal of improving outcomes for individuals living
-          with ANCA-associated vasculitis.
-        </p>
-      </section>
-
-      <section className="bg-white py-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold mb-10">Our Mission</h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-slate-50 p-6 rounded-3xl shadow-sm">
-              <h3 className="text-xl font-semibold mb-3">Research</h3>
-              <p>
-                Facilitate national collaborative studies and strengthen
-                translational and clinical vasculitis research.
-              </p>
-            </div>
-
-            <div className="bg-slate-50 p-6 rounded-3xl shadow-sm">
-              <h3 className="text-xl font-semibold mb-3">Education</h3>
-              <p>
-                Share expertise through seminars, meetings, guidelines and
-                educational resources.
-              </p>
-            </div>
-
-            <div className="bg-slate-50 p-6 rounded-3xl shadow-sm">
-              <h3 className="text-xl font-semibold mb-3">Patient Care</h3>
-              <p>
-                Promote equitable, evidence-based care across Sweden and
-                improve long-term outcomes.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-8">News & Events</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-3xl shadow">
-            <h3 className="font-semibold text-lg">
-              National Kick-off Meeting
-            </h3>
-            <p className="mt-2 text-slate-600">
-              Details about the first annual network meeting.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-3xl shadow">
-            <h3 className="font-semibold text-lg">Upcoming Projects</h3>
-            <p className="mt-2 text-slate-600">
-              Information on collaborative research initiatives.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-sky-50 py-16">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">Get Involved</h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
-            We welcome researchers, clinicians, trainees and patient partners
-            interested in ANCA-associated vasculitis.
-          </p>
-          <button className="bg-blue-800 text-white px-6 py-3 rounded-2xl font-semibold">
-            Contact Us
-          </button>
-        </div>
-      </section>
-
-      <footer className="bg-slate-900 text-slate-300 py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-4">
+    <div className="min-h-screen bg-white text-slate-900">
+      <nav className="sticky top-0 z-50 bg-white border-b">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div>
-            <p className="font-semibold text-white">
-              Swedish ANCA Vasculitis Network
+            <h1 className="font-bold text-xl text-blue-900">SWEVASC</h1>
+            <p className="text-xs text-slate-500">
+              Swedish Network for ANCA-Associated Vasculitis
             </p>
-            <p>National collaboration for research and care.</p>
           </div>
-
-          <div>
-            <p>Email: contact@anca-network.se</p>
-            <p>© 2026 Swedish ANCA Vasculitis Network</p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
+          <div className="hidden md:flex gap-6 text-sm font-medium">
+            <a href="#about">About</a>
+            <a href="#research">Research</a>
+            <a href="#members">Members</a>
+            <a href="#events">Events</a>
+            <a href="#patients">Patients</a>
+            <a href="#conta
