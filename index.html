@@ -27,4 +27,136 @@ export default function SWEVASCHomepage() {
             <a href="#members">Members</a>
             <a href="#events">Events</a>
             <a href="#patients">Patients</a>
-            <a href="#conta
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+
+      <header className="bg-gradient-to-br from-blue-950 via-blue-900 to-sky-700 text-white">
+        <div className="max-w-7xl mx-auto px-6 py-24">
+          <div className="max-w-4xl">
+            <span className="bg-white/20 px-4 py-2 rounded-full text-sm">
+              National Research and Clinical Network
+            </span>
+            <h2 className="text-6xl font-bold mt-6 mb-6">
+              SWEVASC
+            </h2>
+            <p className="text-2xl font-light mb-6">
+              Connecting clinicians, researchers and patient partners across
+              Sweden to advance research and improve outcomes in
+              ANCA-associated vasculitis.
+            </p>
+            <div className="flex gap-4">
+              <button className="bg-white text-blue-900 px-6 py-3 rounded-2xl font-semibold">
+                Network Membership
+              </button>
+              <button className="border border-white px-6 py-3 rounded-2xl">
+                Ongoing Projects
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section id="about" className="max-w-7xl mx-auto px-6 py-20">
+        <div className="grid lg:grid-cols-2 gap-12">
+          <div>
+            <h2 className="text-4xl font-bold mb-6">About SWEVASC</h2>
+            <p className="text-lg leading-relaxed text-slate-700">
+              SWEVASC is a newly established national network dedicated to
+              ANCA-associated vasculitis. The network aims to strengthen
+              collaboration between Swedish academic centres, healthcare
+              professionals, researchers and patient representatives.
+            </p>
+          </div>
+
+
+          <div className="bg-slate-50 rounded-3xl p-8">
+            <h3 className="text-xl font-semibold mb-4">Objectives</h3>
+            <ul className="space-y-3 text-slate-700">
+              <li>• Facilitate national research collaborations</li>
+              <li>• Promote high-quality patient care</li>
+              <li>• Support education and training</li>
+              <li>• Develop multicentre studies and registries</li>
+              <li>• Engage patient research partners</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="research" className="bg-slate-50 py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl font-bold mb-10 text-center">Research Priorities</h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="bg-white p-6 rounded-3xl shadow-sm">
+              <h3 className="font-semibold mb-3">Clinical Studies</h3>
+              <p>National observational and interventional projects.</p>
+            </div>
+            <div className="bg-white p-6 rounded-3xl shadow-sm">
+              <h3 className="font-semibold mb-3">Biomarkers</h3>
+              <p>Identification of prognostic and disease activity markers.</p>
+            </div>
+            <div className="bg-white p-6 rounded-3xl shadow-sm">
+              <h3 className="font-semibold mb-3">Precision Medicine</h3>
+              <p>Improved risk stratification and personalized treatment.</p>
+            </div>
+            <div className="bg-white p-6 rounded-3xl shadow-sm">
+              <h3 className="font-semibold mb-3">Patient Outcomes</h3>
+              <p>Long-term health, quality of life and complications.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="members" className="max-w-7xl mx-auto px-6 py-20">
+        <h2 className="text-4xl font-bold mb-10 text-center">Participating Centres</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {centers.map((center) => (
+            <div key={center} className="border rounded-2xl p-5 text-center bg-white shadow-sm">
+              {center}
+            </div>
+          ))}
+        </div>
+      </section>
+      <section id="events" className="bg-blue-50 py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl font-bold mb-10">News & Events</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-3xl p-8 shadow-sm">
+              <h3 className="font-semibold text-xl mb-2">Annual SWEVASC Meeting</h3>
+              <p>Information about upcoming network meetings and workshops.</p>
+            </div>
+            <div className="bg-white rounded-3xl p-8 shadow-sm">
+              <h3 className="font-semibold text-xl mb-2">Current Initiatives</h3>
+              <p>Updates on active collaborative research projects.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="patients" className="max-w-7xl mx-auto px-6 py-20 text-center">
+        <h2 className="text-4xl font-bold mb-6">Patient Information</h2>
+        <p className="max-w-3xl mx-auto text-lg text-slate-700">
+          SWEVASC aims to provide reliable information for patients and families,
+          while incorporating patient perspectives into research and guideline development.
+        </p>
+      </section>
+
+      <footer id="contact" className="bg-slate-900 text-slate-300 py-12">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-white font-bold text-xl">SWEVASC</h3>
+            <p className="mt-2">Swedish Network for ANCA-Associated Vasculitis</p>
+          </div>
+          <div>
+            <h3 className="text-white font-semibold">Contact</h3>
+            <p>Network Coordinator</p>
+            <p>Johanna Dahlqvist</p>
+            <p>contact@swevasc.se</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
