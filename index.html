@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SweVasc – Swedish Network for ANCA-Associated Vasculitis</title>
+  <meta name="description" content="SweVasc is a national network of researchers, physicians and nurses in Sweden working together to advance research and improve outcomes in ANCA-associated vasculitis.">
+
+  <!-- Favicon (same vessel symbol as the logo) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%230f2a43'/%3E%3Cg fill='none' stroke='%235aa5e0' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M24 6C26 13 24 18 24 24'/%3E%3Cpath d='M40 15C34 17 28 20 24 24'/%3E%3Cpath d='M40 33C34 31 28 28 24 24'/%3E%3Cpath d='M24 42C22 35 24 30 24 24'/%3E%3Cpath d='M8 33C14 31 20 28 24 24'/%3E%3Cpath d='M8 15C14 17 20 20 24 24'/%3E%3C/g%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='24' cy='6' r='4'/%3E%3Ccircle cx='40' cy='15' r='4'/%3E%3Ccircle cx='40' cy='33' r='4'/%3E%3Ccircle cx='24' cy='42' r='4'/%3E%3Ccircle cx='8' cy='33' r='4'/%3E%3Ccircle cx='8' cy='15' r='4'/%3E%3C/g%3E%3Ccircle cx='24' cy='24' r='6' fill='%23f2b632'/%3E%3C/svg%3E">
+
+  <style>
+    /* ---------- Design tokens ---------- */
+    :root {
+      --blue-900: #0f2a43;
+      --blue-700: #1b4d7a;
+      --blue-500: #2f7fc1;
+      --yellow-500: #f2b632;
+      --bg: #ffffff;
+      --bg-soft: #f3f7fb;
+      --text: #1d2a36;
+      --text-muted: #5a6a78;
+      --border: #dbe4ec;
+      --radius: 12px;
+      --max-width: 1060px;
+    }
+
+    /* ---------- Base ---------- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+      font-size: 17px;
+    }
+    h1, h2, h3 { line-height: 1.25; color: var(--blue-900); margin: 0 0 .6em; }
+    h1 { font-size: clamp(2.2rem, 5.5vw, 3.4rem); }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+    h3 { font-size: 1.1rem; }
+    p { margin: 0 0 1em; }
+    a { color: var(--blue-500); }
+    a:hover { color: var(--blue-700); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+    section { padding: 72px 0; }
+    section.alt { background: var(--bg-soft); }
+    .section-intro { color: var(--text-muted); max-width: 700px; margin-bottom: 2rem; }
+
+    /* ---------- Header / nav ---------- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 64px; gap: 16px; flex-wrap: wrap;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 1.35rem; letter-spacing: .5px;
+      color: var(--blue-900); text-decoration: none;
+    }
+    .logo svg { width: 38px; height: 38px; display: block; }
+    .logo span { color: var(--blue-500); }
+    nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: var(--text); font-size: .95rem; font-weight: 500; }
+    nav a:hover { color: var(--blue-500); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+      color: #fff;
+      padding: 96px 0 88px;
+    }
+    .hero h1 { color: #fff; }
+    .hero h1 span { color: var(--yellow-500); }
+    .hero .tagline { font-size: 1.2rem; max-width: 660px; color: #d6e6f5; margin-bottom: 2rem; }
+    .hero .eyebrow {
+      display: inline-block; text-transform: uppercase; letter-spacing: 2px;
+      font-size: .8rem; font-weight: 700; color: var(--yellow-500); margin-bottom: 1rem;
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-block; padding: 12px 26px; border-radius: 999px;
+      font-weight: 600; text-decoration: none; transition: transform .15s, background .15s;
+      border: 2px solid transparent;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--yellow-500); color: var(--blue-900); }
+    .btn-primary:hover { background: #ffc857; color: var(--blue-900); }
+    .btn-outline { border-color: #fff; color: #fff; margin-left: 10px; }
+    .btn-outline:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+    /* ---------- Cards / grids ---------- */
+    .grid { display: grid; gap: 24px; }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      box-shadow: 0 2px 8px rgba(15,42,67,.04);
+    }
+    .card h3 { margin-bottom: .3em; }
+    .card p:last-child { margin-bottom: 0; }
+
+    /* ---------- About ---------- */
+    .two-col { display: grid; gap: 40px; grid-template-columns: 1.3fr 1fr; align-items: start; }
+    .callout {
+      background: var(--bg-soft); border-left: 4px solid var(--blue-500);
+      padding: 22px 24px; border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .callout h3 { margin-bottom: .4em; }
+    .callout ul { margin: 0; padding-left: 1.1em; }
+    .callout li { margin-bottom: .35em; }
+
+    /* ---------- Aims ---------- */
+    .aims { list-style: none; counter-reset: aim; margin: 0; padding: 0; display: grid; gap: 18px; }
+    .aims li {
+      counter-increment: aim; position: relative;
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 22px 24px 22px 74px;
+    }
+    .aims li::before {
+      content: counter(aim);
+      position: absolute; left: 22px; top: 22px;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--blue-900); color: #fff; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .aims strong { color: var(--blue-900); }
+    .aims ul { margin: .6em 0 0; padding-left: 1.1em; color: var(--text-muted); font-size: .96rem; }
+
+    /* ---------- How we work ---------- */
+    .steps { margin: 0 0 1em; padding-left: 1.2em; }
+    .steps li { margin-bottom: .45em; }
+    .outcomes h3 { color: var(--blue-700); }
+    .outcomes ul { margin: 0; padding-left: 1.1em; }
+    .outcomes li { margin-bottom: .4em; }
+
+    /* ---------- Members ---------- */
+    .grid-members { grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+    .member { padding: 22px 24px; }
+    .member .name { font-weight: 700; font-size: 1.05rem; color: var(--blue-900); margin: 0 0 .25em; }
+    .member .role { color: var(--text); font-size: .95rem; margin: 0 0 .3em; }
+    .member .aff { color: var(--text-muted); font-size: .88rem; margin: 0; }
+    .member.organizer { border-color: var(--yellow-500); border-width: 2px; }
+    .organizer-badge {
+      display: inline-block; margin-left: 6px; padding: 1px 9px; border-radius: 999px;
+      background: var(--yellow-500); color: var(--blue-900); font-size: .72rem; font-weight: 700;
+      vertical-align: middle;
+    }
+
+    /* ---------- Meeting photo / news ---------- */
+    figure.meeting { margin: 0 0 2rem; max-width: 720px; }
+    figure.meeting img {
+      width: 100%; height: auto; display: block;
+      border-radius: var(--radius); border: 1px solid var(--border);
+    }
+    figure.meeting figcaption { color: var(--text-muted); font-size: .92rem; margin-top: .6em; }
+    .news-item { padding: 6px 0; }
+    .news-date { font-size: .85rem; color: var(--text-muted); font-weight: 600; }
+
+    /* ---------- Publications ---------- */
+    .pubs { margin: 0; padding-left: 1.4em; color: var(--text); }
+    .pubs li { margin-bottom: .5em; }
+
+    /* ---------- Funding / organizer ---------- */
+    .funding-box {
+      background: var(--blue-900); color: #fff;
+      border-radius: var(--radius); padding: 40px; text-align: center;
+    }
+    .funding-box h2 { color: #fff; }
+    .funding-box p { max-width: 640px; margin-left: auto; margin-right: auto; color: #d6e6f5; }
+    .funding-box a { color: var(--yellow-500); font-weight: 600; }
+
+    /* ---------- Footer ---------- */
+    footer { background: #0a1c2e; color: #a9bccd; padding: 32px 0; font-size: .9rem; }
+    footer .container { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a { color: #a9bccd; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 760px) {
+      section { padding: 52px 0; }
+      .two-col { grid-template-columns: 1fr; }
+      .btn-outline { margin: 12px 0 0 0; }
+      nav ul { gap: 14px; }
+      .hero { padding: 64px 0; }
+      .aims li { padding-left: 64px; }
+      .aims li::before { left: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="container nav">
+      <a href="#top" class="logo" aria-label="SweVasc – to top of page">
+        <!-- Logo: network of vessels -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="none" stroke="#2f7fc1" stroke-width="3" stroke-linecap="round">
+            <path d="M24 6C26 13 24 18 24 24"/>
+            <path d="M40 15C34 17 28 20 24 24"/>
+            <path d="M40 33C34 31 28 28 24 24"/>
+            <path d="M24 42C22 35 24 30 24 24"/>
+            <path d="M8 33C14 31 20 28 24 24"/>
+            <path d="M8 15C14 17 20 20 24 24"/>
+          </g>
+          <g fill="#0f2a43">
+            <circle cx="24" cy="6" r="4"/>
+            <circle cx="40" cy="15" r="4"/>
+            <circle cx="40" cy="33" r="4"/>
+            <circle cx="24" cy="42" r="4"/>
+            <circle cx="8" cy="33" r="4"/>
+            <circle cx="8" cy="15" r="4"/>
+          </g>
+          <circle cx="24" cy="24" r="6" fill="#f2b632"/>
+        </svg>
+        <div>Swe<span>Vasc</span></div>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#aims">Mission</a></li>
+          <li><a href="#how">How we work</a></li>
+          <li><a href="#network">Members</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#publications">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="container">
+        <span class="eyebrow">Swedish national network</span>
+        <h1>Swe<span>Vasc</span></h1>
+        <p class="tagline">
+          A collaborative initiative of researchers, physicians and nurses across Sweden
+          to advance research and improve outcomes for people with ANCA-associated vasculitis.
+        </p>
+        <a href="#about" class="btn btn-primary">About the network</a>
+        <a href="#network" class="btn btn-outline">Meet the members</a>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about">
+      <div class="container two-col">
+        <div>
+          <h2>Background and need</h2>
+          <p>
+            Anti-neutrophil cytoplasmic antibody (ANCA)-associated vasculitides (AAV) are severe,
+            relapsing-remitting autoimmune diseases associated with high morbidity and increased
+            mortality. Current treatments rely heavily on broad immunosuppression, which carries
+            substantial risks such as severe infections. There is a clear clinical need for safer,
+            more targeted treatment strategies, standardized follow-up routines and a more uniform
+            national care structure.
+          </p>
+          <p>
+            AAV are rare (prevalence 200–400 per million), so Swedish clinics manage small and
+            heterogeneous patient cohorts. This leads to fragmented clinical practice, limited
+            opportunities for methodologically robust studies, and difficulty translating research
+            advances into consistent care. A coordinated national research and clinical network is
+            therefore essential, both for scientific understanding and for standardized clinical
+            management.
+          </p>
+        </div>
+        <aside class="callout">
+          <h3>At a glance</h3>
+          <ul>
+            <li>Nationwide, multidisciplinary network</li>
+            <li>Focus: ANCA-associated vasculitis (AAV)</li>
+            <li>Researchers, physicians and nurses</li>
+            <li>27 members from seven universities</li>
+            <li>First network meeting: 6 October 2026</li>
+            <li>Coordinated by Johanna Dahlqvist, Uppsala University</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== Aims ===== -->
+    <section id="aims" class="alt">
+      <div class="container">
+        <h2>Our mission</h2>
+        <p class="section-intro">
+          The network will deliver clinically relevant research collaboration and concrete,
+          implementable outputs for Swedish rheumatology and nephrology.
+        </p>
+        <ol class="aims">
+          <li>
+            <strong>Strengthen collaborative translational and clinical studies</strong>
+            with direct implications for patient management.
+          </li>
+          <li>
+            <strong>Create shared research protocols</strong>
+            for harmonized data collection, biosampling and outcome definitions across Swedish centres.
+          </li>
+          <li>
+            <strong>Support junior researchers</strong>
+            through structured mentoring, presentation opportunities and integration into
+            collaborative projects.
+          </li>
+          <li>
+            <strong>Incorporate patient research partners</strong>
+            to ensure that network-generated guidelines and research protocols align with patient priorities.
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== How we work / outcomes ===== -->
+    <section id="how">
+      <div class="container">
+        <h2>How we work</h2>
+        <p class="section-intro">
+          Annual in-person meetings, starting in autumn 2026, serve as focused workshops.
+          Regular online coordination keeps the work moving between meetings.
+        </p>
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>Annual meetings</h3>
+            <ol class="steps">
+              <li>Coordinated updates on collaborative studies</li>
+              <li>Development of clinical and research protocols</li>
+              <li>Scientific exchange and mentorship for junior researchers</li>
+              <li>Structured feedback from patient research partners</li>
+            </ol>
+          </article>
+          <article class="card outcomes">
+            <h3>Long-term outcomes</h3>
+            <ul>
+              <li>Stronger multicentre collaboration and junior researcher development</li>
+              <li>New therapeutic targets and improved access to multicentre trials</li>
+              <li>A sustained national platform for evidence-based, uniform AAV care across Sweden</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Network / members ===== -->
+    <section id="network" class="alt">
+      <div class="container">
+        <h2>Members</h2>
+        <p class="section-intro">
+          SweVasc brings together physicians, nurses, researchers and a patient research partner from
+          Gothenburg, Karolinska Institutet, Linköping, Lund, Umeå, Uppsala and Örebro.
+        </p>
+        <div class="grid grid-members">
+
+          <div class="card member">
+            <p class="name">Imtithal Al Azzawi</p>
+            <p class="role">Specialist physician and PhD student, nephrology</p>
+            <p class="aff">Lund University and Skåne University Hospital, Lund</p>
+          </div>
+          <div class="card member">
+            <p class="name">Beatrice Alderin</p>
+            <p class="role">Resident physician and PhD student, rheumatology</p>
+            <p class="aff">Karolinska Institutet and Center for Rheumatology, Stockholm</p>
+          </div>
+          <div class="card member">
+            <p class="name">Aleksandra Antovic</p>
+            <p class="role">Senior consultant and associate professor, rheumatology</p>
+            <p class="aff">Karolinska Institutet and Karolinska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Mikael Brink</p>
+            <p class="role">Resident physician and assistant professor, rheumatology</p>
+            <p class="aff">Umeå University and Norrland University Hospital, Umeå</p>
+          </div>
+          <div class="card member">
+            <p class="name">Sara Brolin</p>
+            <p class="role">Nurse and PhD student</p>
+            <p class="aff">Karolinska Institutet and Karolinska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Annette Bruchfeld</p>
+            <p class="role">Senior consultant and professor, nephrology</p>
+            <p class="aff">Linköping University and Linköping University Hospital; Karolinska Institutet and Karolinska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Janice Bärtzner</p>
+            <p class="role">Patient research partner</p>
+          </div>
+          <div class="card member organizer">
+            <p class="name"><a href="https://www.uu.se/kontakt-och-organisation/personal?query=N5-1003" target="_blank" rel="noopener">Johanna Dahlqvist</a>
+              <span class="organizer-badge">Network organizer</span></p>
+            <p class="role">Specialist physician and associate professor, rheumatology</p>
+            <p class="aff">Uppsala University and Uppsala University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Maria Eriksson Svensson</p>
+            <p class="role">Senior consultant and professor, nephrology</p>
+            <p class="aff">Uppsala University and Uppsala University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Martina Frodlund</p>
+            <p class="role">Senior consultant and associate professor, rheumatology</p>
+            <p class="aff">Linköping University and Linköping University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Annika Granath</p>
+            <p class="role">Nurse and PhD student</p>
+            <p class="aff">Örebro University and Västmanland Hospital Västerås</p>
+          </div>
+          <div class="card member">
+            <p class="name">Iva Gunnarsson</p>
+            <p class="role">Senior consultant and adjunct professor, rheumatology</p>
+            <p class="aff">Karolinska Institutet and Karolinska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Peter Hemmingsson</p>
+            <p class="role">Associate senior consultant and PhD student, nephrology</p>
+            <p class="aff">Karolinska Institutet and Karolinska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Anna Juto</p>
+            <p class="role">Specialist physician and PhD student, rheumatology</p>
+            <p class="aff">Karolinska Institutet and Karolinska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Ann Knight</p>
+            <p class="role">Senior consultant and associate professor, rheumatology</p>
+            <p class="aff">Uppsala University and Uppsala University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Anna Levin</p>
+            <p class="role">Specialist physician and postdoctoral researcher, nephrology</p>
+            <p class="aff">University of Gothenburg and Sahlgrenska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Hanna Lindberg</p>
+            <p class="role">Specialist physician and PhD student, rheumatology</p>
+            <p class="aff">Uppsala University and Uppsala University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Vivianne Malmström</p>
+            <p class="role">Professor of rheumatological immunology</p>
+            <p class="aff">Karolinska Institutet</p>
+          </div>
+          <div class="card member">
+            <p class="name">Sophie Ohlsson</p>
+            <p class="role">Senior consultant and associate professor, nephrology</p>
+            <p class="aff">Lund University and Skåne University Hospital, Lund</p>
+          </div>
+          <div class="card member">
+            <p class="name">Elli Panayi</p>
+            <p class="role">Specialist physician, rheumatology</p>
+            <p class="aff">Örebro University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Susanne Pettersson</p>
+            <p class="role">Nurse and associate professor</p>
+            <p class="aff">Karolinska Institutet and Karolinska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Rille Pullerits</p>
+            <p class="role">Senior consultant and associate professor, rheumatology and clinical immunology</p>
+            <p class="aff">University of Gothenburg and Sahlgrenska University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Annika Söderbergh</p>
+            <p class="role">Senior consultant and postdoctoral researcher, rheumatology</p>
+            <p class="aff">Örebro University and Örebro University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Klytaimnistra Voudouri</p>
+            <p class="role">Senior consultant and PhD student, nephrology</p>
+            <p class="aff">Uppsala University and Uppsala University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Karin Wadström</p>
+            <p class="role">Resident physician and postdoctoral researcher, rheumatology</p>
+            <p class="aff">Karolinska Institutet and Center for Rheumatology, Stockholm</p>
+          </div>
+          <div class="card member">
+            <p class="name">Maria Weiner</p>
+            <p class="role">Specialist physician and postdoctoral researcher, nephrology</p>
+            <p class="aff">Linköping University and Linköping University Hospital</p>
+          </div>
+          <div class="card member">
+            <p class="name">Elisabet Welin</p>
+            <p class="role">Nurse and professor</p>
+            <p class="aff">Örebro University</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== News ===== -->
+    <section id="news">
+      <div class="container">
+        <h2>News</h2>
+
+        <figure class="meeting">
+          <!-- Upload the photo to the repository as meeting-2026-10-06.jpg (or change the file name here) -->
+          <img src="meeting-2026-10-06.jpg"
+               alt="Group photo of participants outdoors at the first SweVasc network meeting, 6 October 2026"
+               onerror="this.closest('figure').style.display='none'">
+          <figcaption>Participants at the first SweVasc network meeting, 6 October 2026.</figcaption>
+        </figure>
+
+        <div class="card news-item">
+          <div class="news-date">6 October 2026</div>
+          <h3>First network meeting</h3>
+          <p>
+            SweVasc held its first in-person meeting, bringing together researchers, physicians and
+            nurses from across Sweden to start the collaboration.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Publications ===== -->
+    <section id="publications" class="alt">
+      <div class="container">
+        <h2>Collaborative projects since 2021</h2>
+        <p class="section-intro">
+          The participating centres have collaborated for several years. A selection of resulting publications:
+        </p>
+        <ol class="pubs">
+          <li>Berglin, E. et al. Anti-neutrophil cytoplasmic antibodies predate symptom onset of ANCA-associated vasculitis. A case-control study. <em>J Autoimmun</em> 117, 102579 (2021).</li>
+          <li>Dahlqvist, J. et al. Identification and functional characterization of a novel susceptibility locus for small vessel vasculitis with MPO-ANCA. <em>Rheumatology (Oxford)</em> 61, 3461–3470 (2022).</li>
+          <li>Johansson, L. et al. Complement activation prior to symptom onset in myeloperoxidase ANCA-associated vasculitis but not proteinase 3 ANCA associated vasculitis – A Swedish biobank study. <em>Scand J Rheumatol</em> 51, 214–219 (2022).</li>
+          <li>Esberg, A. et al. Oral microbiota profile in patients with anti-neutrophil cytoplasmic antibody-associated vasculitis. <em>Microorganisms</em> 10 (2022).</li>
+          <li>Ekman, D. et al. Stratified genetic analysis reveals sex differences in MPO-ANCA-associated vasculitis. <em>Rheumatology (Oxford)</em> 62, 3213–3218 (2023).</li>
+          <li>Lundtoft, C. et al. The HLA region in ANCA-associated vasculitis: characterisation of genetic associations in a Scandinavian patient population. <em>RMD Open</em> 10 (2024).</li>
+          <li>Hellbacher, E. et al. The plasma proteome reveals distinct signaling pathways associated with PR3-ANCA positive and MPO-ANCA positive vasculitis. <em>Front Immunol</em> 16, 1600754 (2025).</li>
+          <li>Lindberg, H. et al. In-depth analysis of disease manifestations in antineutrophil cytoplasmic antibody-associated vasculitides identifies distinct clinical phenotypes. <em>ACR Open Rheumatol</em> 7, e70009 (2025).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== Funding ===== -->
+    <section id="funding">
+      <div class="container">
+        <div class="funding-box">
+          <h2>Funding</h2>
+          <p>
+            The SweVasc network is funded by
+            <a href="https://svenskreumatologi.se" target="_blank" rel="noopener">Svensk Reumatologisk Förening</a>
+            (the Swedish Society for Rheumatology).
+          </p>
+          <p>
+            Network coordination:
+            <a href="https://www.uu.se/kontakt-och-organisation/personal?query=N5-1003" target="_blank" rel="noopener">Johanna Dahlqvist, Uppsala University</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <span>© 2026 SweVasc – Swedish network for ANCA-associated vasculitis</span>
+      <span>Information on this site is general and does not replace medical advice.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
